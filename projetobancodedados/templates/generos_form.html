@@ -1,0 +1,17 @@
+
+{% extends "base.html" %}
+{% block title %}{{ 'Editar Gênero' if genero else 'Novo Gênero' }}{% endblock %}
+{% block content %}
+<h2 class="mb-3">{{ 'Editar Gênero' if genero else 'Novo Gênero' }}</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Nome do gênero</label>
+        <input type="text" name="Nome_genero" class="form-control" required
+               value="{{ genero.Nome_genero if genero else '' }}">
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{{ url_for('generos.listar_generos') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

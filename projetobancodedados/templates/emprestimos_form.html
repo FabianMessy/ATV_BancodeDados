@@ -1,0 +1,60 @@
+
+{% extends "base.html" %}
+{% block title %}{{ 'Editar Empréstimo' if emprestimo else 'Novo Empréstimo' }}{% endblock %}
+{% block content %}
+<h2 class="mb-3">{{ 'Editar Empréstimo' if emprestimo else 'Novo Empréstimo' }}</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Usuário</label>
+        <select name="Usuario_id" class="form-select" required>
+            <option value="">-- Selecione --</option>
+            {% for u in usuarios %}
+            <option value="{{ u.ID_usuario }}"
+                {% if emprestimo and emprestimo.Usuario_id == u.ID_usuario %}selected{% endif %}>
+                {{ u.Nome_usuario }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Livro</label>
+        <select name="Livro_id" class="form-select" required>
+            <option value="">-- Selecione --</option>
+            {% for l in livros %}
+            <option value="{{ l.ID_livro }}"
+                {% if emprestimo and emprestimo.Livro_id == l.ID_livro %}selected{% endif %}>
+                {{ l.Titulo }}
+            </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Data de Empréstimo</label>
+        <input type="date" name="Data_emprestimo" class="form-control"
+               value="{{ emprestimo.Data_emprestimo if emprestimo and emprestimo.Data_emprestimo else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Data de Devolução Prevista</label>
+        <input type="date" name="Data_devolucao_prevista" class="form-control"
+               value="{{ emprestimo.Data_devolucao_prevista if emprestimo and emprestimo.Data_devolucao_prevista else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Data de Devolução Real</label>
+        <input type="date" name="Data_devolucao_real" class="form-control"
+               value="{{ emprestimo.Data_devolucao_real if emprestimo and emprestimo.Data_devolucao_real else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select name="Status_emprestimo" class="form-select" required>
+            {% set status_atual = emprestimo.Status_emprestimo if emprestimo else 'pendente' %}
+            <option value="pendente" {% if status_atual == 'pendente' %}selected{% endif %}>Pendente</option>
+            <option value="devolvido" {% if status_atual == 'devolvido' %}selected{% endif %}>Devolvido</option>
+            <option value="atrasado" {% if status_atual == 'atrasado' %}selected{% endif %}>Atrasado</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{{ url_for('emprestimos.listar_emprestimos') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

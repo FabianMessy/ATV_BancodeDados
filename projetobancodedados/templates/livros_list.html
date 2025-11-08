@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+{% block title %}Livros{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Livros</h2>
+    <a href="{{ url_for('livros.novo_livro') }}" class="btn btn-primary">Novo Livro</a>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Gênero</th>
+            <th>Editora</th>
+            <th>ISBN</th>
+            <th>Ano</th>
+            <th>Qtd.</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for l in livros %}
+        <tr>
+            <td>{{ l.ID_livro }}</td>
+            <td>{{ l.Titulo }}</td>
+            <td>{{ l.Nome_autor or '-' }}</td>
+            <td>{{ l.Nome_genero or '-' }}</td>
+            <td>{{ l.Nome_editora or '-' }}</td>
+            <td>{{ l.ISBN }}</td>
+            <td>{{ l.Ano_publicacao or '-' }}</td>
+            <td>{{ l.Quantidade_disponivel or 0 }}</td>
+            <td>
+                <a href="{{ url_for('livros.editar_livro', id_livro=l.ID_livro) }}" class="btn btn-sm btn-secondary">Editar</a>
+                <form action="{{ url_for('livros.excluir_livro', id_livro=l.ID_livro) }}" method="post" style="display:inline-block" onsubmit="return confirm('Excluir livro?');">
+                    <button class="btn btn-sm btn-danger">Excluir</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

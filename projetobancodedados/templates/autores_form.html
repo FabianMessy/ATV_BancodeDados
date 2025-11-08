@@ -1,0 +1,31 @@
+
+{% extends "base.html" %}
+{% block title %}{{ 'Editar Autor' if autor else 'Novo Autor' }}{% endblock %}
+{% block content %}
+<h2 class="mb-3">{{ 'Editar Autor' if autor else 'Novo Autor' }}</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Nome do Autor</label>
+        <input type="text" name="Nome_autor" class="form-control" required
+               value="{{ autor.Nome_autor if autor else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Nacionalidade</label>
+        <input type="text" name="Nacionalidade" class="form-control"
+               value="{{ autor.Nacionalidade if autor else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Data de Nascimento</label>
+        <input type="date" name="Data_nascimento" class="form-control"
+               value="{{ autor.Data_nascimento if autor and autor.Data_nascimento else '' }}">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Biografia</label>
+        <textarea name="Biografia" class="form-control" rows="4">{{ autor.Biografia if autor else '' }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-success">Salvar</button>
+    <a href="{{ url_for('autores.listar_autores') }}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
